@@ -1,0 +1,34 @@
+<div class="container" style="border: 1px solid silver;height:300px;">
+  <div class="col-6"></div>
+
+  <form [formGroup]="userform" (ngSubmit)="send()">
+
+
+    <div class="form-group">
+      <label for="username">Username</label>
+
+      <input required type="text" formControlName="username" class="form-control" />
+      <small *ngIf="username.invalid" class="form-text text-danger">Requis</small>
+    </div>
+
+
+    <div class="form-group">
+      <label for="password">Password</label>
+
+
+      <input type="password" formControlName="password" class="form-control" />
+      <small *ngIf="password.invalid " class="form-text text-danger">Too Short minimum 6 letters</small>
+
+    </div>
+
+    <button [disabled]="password.invalid || username.invalid" [routerLink]="['/checkbox']" class="btn btn-primary" type="submit">Login
+
+    </button>
+    <button class="btn btn-danger" (click)="reset()" type="button">Reset</button>
+
+
+
+  </form>
+
+
+</div>
