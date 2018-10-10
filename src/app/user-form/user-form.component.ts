@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Custom } from 'src/app/user-form/custom';
+import { AuthService } from '../auth.service';
+import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -14,13 +17,15 @@ export class UserFormComponent implements OnInit {
   public userform: FormGroup;
   loading = false;
   submitted = false;
+  private router: Router;
 
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, private authenticationService: AuthService) {
    this.userform = fb.group({
 
-     username : [null],
-     password : [null, Validators.minLength(6)],
-
+    // username : [null, Validators.pattern('[^ @]*@[^ @]*')],
+     username : ['', Validators.email],
+     password : ['',
+    Validators.pattern( '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}') ],
    });
 
    }
@@ -33,16 +38,26 @@ export class UserFormComponent implements OnInit {
     return this.userform.get('password') as FormControl;
   }
 
+  get f() { return this.userform.controls; }
+   login() {
 
-   send() {
-        this.submitted = true;
+      this.submitted = true;
 
-    // stop here if form is invalid
-    if (this.userform.invalid) {
-        return;
-    }
+      // stop here if form is invalid
+      if (this.userform.invalid) {
+          return;
+      }
 
-   }
+      this.loading = true;
+      this.authenticationService.login(this.f.username.value, this.f.password.value)
+          .pipe(first())
+          .subscribe(
+              data => {
+                  this.router.navigate(['/checkbox']);
+                });
+  }
+
+
    reset() {
     this.userform.reset();
   }

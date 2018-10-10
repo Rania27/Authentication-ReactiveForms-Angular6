@@ -6,7 +6,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     ReactiveFormsModule, FormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule.forRoot([
 
       { path: 'checkbox', component: CheckboxComponent },

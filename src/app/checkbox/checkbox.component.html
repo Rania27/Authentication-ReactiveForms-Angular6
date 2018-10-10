@@ -7,11 +7,12 @@
 <label class="container">
   <div class="col-6"></div>
 
-  <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck (change)="toggleVisibility($event)" />
+  <input type="checkbox" class="custom-control-input" [(ngModel)]="theCheckbox" data-md-icheck (change)="toggleVisibility($event)" />
+
   <span *ngIf="marked">I have read and agree to the following</span><span *ngIf="!marked">I haven't read terms and
     conditions</span>
   <span class="checkmark"></span>
 </label>
 <a class="btn btn-danger" [routerLink]="['/']">Back</a>
-<button [disabled]="!marked" type="button" class="btn btn-success" [routerLink]="['/home']">
+<button [disabled]="!marked" type="button" (click)="login()" class="btn btn-success"  [routerLink]="['/home']">
 Continue</button>
